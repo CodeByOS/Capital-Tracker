@@ -2,6 +2,7 @@ import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from './ui/button'
+import { ChartNoAxesCombined, ListFilterPlus } from 'lucide-react'
 
 const Header = () => {
   return (
@@ -11,19 +12,44 @@ const Header = () => {
           <Image
             src="/logo.png"
             alt="Logo"
-            width={100}
-            height={30}
+            width={140}
+            height={40}
             className="object-contain"
           />
         </Link>
-        <div>
+        <div className="flex items-center space-x-4">
+          {/* Links for authenticated users */}
+          <SignedIn>
+            {/* Link to the dashboard page */}
+            <Link href={"/dashboard"} className="text-gray-600 hover:text-blue-600 flex items-center gap-2">
+              <Button variant="secondary">
+                <ChartNoAxesCombined />
+                <span className="hidden md:inline">Dashboard</span>
+              </Button>
+            </Link>
+
+            {/* Link to the transaction page */}
+            <Link href={"/transaction/create"}>
+              <Button className="flex items-center gap-2">
+                <ListFilterPlus />
+                <span className="hidden md:inline">Add Transaction</span>
+              </Button>
+            </Link>
+
+          </SignedIn>
           <SignedOut>
             <SignInButton forceRedirectUrl='/dashboard'>
               <Button variant="secondary">Login</Button>
             </SignInButton>
           </SignedOut>
           <SignedIn>
-            <UserButton />
+            <UserButton appearance={{
+              elements: {
+                avatarBox: 'h-10 w-10',
+                userButtonAvatarBox: 'h-10 w-10',
+                userButtonAvatar: 'h-10 w-10 rounded-full',
+              },
+            }} />
           </SignedIn>
         </div>
       </nav>
