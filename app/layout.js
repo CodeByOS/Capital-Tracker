@@ -25,9 +25,9 @@ export default function RootLayout({ children }) {
           {/* Main content */}
           <main className="min-h-screen">{children}</main>
           {/* footer */}
-          <footer className="bg-gray-800 text-white p-10 text-center">
-            <div className="container mx-auto px-4 text-center">
-              <p>&copy; {new Date().getFullYear()} CapitalTracker. All rights reserved.</p>
+          <footer className="bg-blue-50 py-12">
+            <div className="container mx-auto px-4 text-center text-gray-800">
+              <p className="font-bold">&copy; {new Date().getFullYear()} CapitalTracker. All rights reserved.</p>
             </div>
           </footer>
         </body>

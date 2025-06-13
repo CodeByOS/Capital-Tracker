@@ -6,13 +6,13 @@ import { ChartNoAxesCombined, ListFilterPlus } from 'lucide-react'
 
 const Header = () => {
   return (
-    <div className="top-0 fixed w-full bg-gray-800 text-white backdrop-blur-md z-50 border-b">
-      <nav className="container mx-auto px-4 py-4 flex justify-between items-center h-17 my-auto">
+    <div className="top-0 fixed w-full bg-transparent text-white backdrop-blur-md z-50 border-b">
+      <nav className="container mx-auto px-8 py-8 flex justify-between items-center h-17 my-auto">
         <Link href="/" className="flex items-center">
           <Image
             src="/logo.png"
             alt="Logo"
-            width={140}
+            width={170}
             height={40}
             className="object-contain"
           />

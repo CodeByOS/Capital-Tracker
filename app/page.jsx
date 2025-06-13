@@ -1,5 +1,6 @@
 import HeroSection from "@/components/hero";
-import { statsData } from "@/data/landing";
+import { Card, CardContent } from "@/components/ui/card";
+import { featuresData, statsData } from "@/data/landing";
 
 export default function Home() {
   return (
@@ -17,6 +18,25 @@ export default function Home() {
                   {stat.label}
                 </div>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12">
+            All-in-one platform to take control of your financial life.
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {featuresData.map((feature, index) => (
+              <Card key={index} className="p-6">
+                <CardContent className="space-y-4 pt-4">
+                  {feature.icon}
+                  <h3 className="text-xl font-semibold">{feature.title}</h3>
+                  <p className="text-gray-600">{feature.description}</p>
+                </CardContent>
+              </Card>
             ))}
           </div>
         </div>
