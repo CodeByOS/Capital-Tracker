@@ -48,6 +48,7 @@ model Transaction {
 model Account {
   id          String    @id @default(uuid())
   name        String
+  type        AccountType
   balance     Decimal   @default(0)
   isDefault   Boolean   @default(false)
   userId      String
@@ -60,6 +61,11 @@ model Account {
 
   @@index([userId])
   @@map("accounts")
+}
+
+enum AccountType {
+  CURRENT
+  SAVINGS
 }
 
 
