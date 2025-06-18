@@ -3,8 +3,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from './ui/button'
 import { ChartNoAxesCombined, ListFilterPlus } from 'lucide-react'
+import { authUser } from '@/lib/authUser'
 
-const Header = () => {
+const Header = async() => {
+  await authUser();
   return (
     <div className="top-0 fixed w-full bg-transparent text-white backdrop-blur-md z-50 border-b">
       <nav className="container mx-auto px-8 py-8 flex justify-between items-center h-17 my-auto">
