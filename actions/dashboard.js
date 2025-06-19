@@ -2,6 +2,7 @@
 
 import { prismadb } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/dist/types/server";
+import { revalidatePath } from "next/cache";
 
 const serializeTransaction = (obj) => {
     const serialized = { ...obj };
@@ -56,8 +57,10 @@ export async function createAccount(data) {
             },
         });
 
-
+        const serializedAccount = serializeTransaction(account);
+        revalidatePath("/dashboard");
+        return { success: true, account: serializedAccount };
     } catch (err) {
-        
+        throw new Error(`Error creating account: ${err.message}`);
     }
 }
