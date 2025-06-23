@@ -1,9 +1,9 @@
 import { Suspense } from "react";
 import { getAccountWithTransactions } from "@/actions/account";
 import { BarLoader } from "react-spinners";
-import { TransactionTable } from "../_components/transaction-table";
 import { notFound } from "next/navigation";
 import { AccountChart } from "../_components/account-chart";
+import TransactionTable from "../_components/transaction-table";
 
 export default async function AccountPage({ params }) {
   const accountData = await getAccountWithTransactions(params.id);
@@ -18,7 +18,7 @@ export default async function AccountPage({ params }) {
     <div className="space-y-8 px-5">
       <div className="flex gap-4 items-end justify-between">
         <div>
-          <h1 className="text-5xl sm:text-6xl font-bold tracking-tight gradient-title capitalize">
+          <h1 className="text-5xl font-bold mb-5 bg-gradient-to-r from-purple-800 to-blue-800 bg-clip-text text-transparent inline-block">
             {account.name}
           </h1>
           <p className="text-muted-foreground">
