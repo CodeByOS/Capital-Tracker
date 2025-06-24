@@ -22,6 +22,12 @@ export default async function DashboardPage() {
   return (
     <div className="px-5">
       {/* Budget progress */}
+      {defaultAccount && (
+        <BudgetProgress
+          initialBudget = { budgetData?.budget }
+          currentExpenses = { budgetData?.currentExpenses || 0 }
+        />
+        )}
 
       {/* Overview */}
 
