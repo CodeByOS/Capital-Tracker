@@ -47,15 +47,15 @@ export function AccountChart({ transactions }) {
         // Group transactions by date
         const grouped = filtered.reduce((acc, transaction) => {
         const date = format(new Date(transaction.date), "MMM dd");
-        if (!acc[date]) {
-            acc[date] = { date, income: 0, expense: 0 };
-        }
-        if (transaction.type === "INCOME") {
-            acc[date].income += transaction.amount;
-        } else {
-            acc[date].expense += transaction.amount;
-        }
-            return acc;
+            if (!acc[date]) {
+                acc[date] = { date, income: 0, expense: 0 };
+            }
+            if (transaction.type === "INCOME") {
+                acc[date].income += transaction.amount;
+            } else {
+                acc[date].expense += transaction.amount;
+            }
+                return acc;
         }, {});
 
     // Convert to array and sort by date
@@ -67,12 +67,11 @@ export function AccountChart({ transactions }) {
     // Calculate totals for the selected period
     const totals = useMemo(() => {
         return filteredData.reduce(
-        (acc, day) => ({
-            income: acc.income + day.income,
-            expense: acc.expense + day.expense,
-        }),
-        { income: 0, expense: 0 }
-    );
+            (acc, day) => ({
+                income: acc.income + day.income,
+                expense: acc.expense + day.expense,
+            }), { income: 0, expense: 0 }
+        );
     }, [filteredData]);
 
     return (
