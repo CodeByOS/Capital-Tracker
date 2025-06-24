@@ -76,16 +76,16 @@ export async function updateBudget(amount) {
 
         // Update or create budget
         const budget = await prismadb.budget.upsert({
-        where: {
-            userId: user.id,
-        },
-        update: {
-            amount,
-        },
-        create: {
-            userId: user.id,
-            amount,
-        },
+            where: {
+                userId: user.id,
+            },
+            update: {
+                amount,
+            },
+            create: {
+                userId: user.id,
+                amount,
+            },
         });
 
         revalidatePath("/dashboard");
