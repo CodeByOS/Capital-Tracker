@@ -1,9 +1,9 @@
 import React from 'react'
 
-const transactionForm = () => {
+const AddTransactionForm = () => {
   return (
     <div>transactionForm</div>
   )
 }
 
-export default transactionForm
+export default AddTransactionForm
