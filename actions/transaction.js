@@ -1,4 +1,6 @@
+import aj from "@/lib/arcjet";
 import { prismadb } from "@/lib/prisma";
+import { request } from "@arcjet/next";
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 
@@ -13,6 +15,31 @@ export async function addTransaction(data) {
         if(!userId) {
             throw new Error("User not authenticated");
         }
+
+        //* GET REQUEST DATA FOR ARCJET
+        const req = await request();
+         // Check rate limit
+        const decision = await aj.protect(req, {
+            userId,
+            requested: 1, // Specify how many tokens to consume
+        });
+
+        if (decision.isDenied()) {
+            if (decision.reason.isRateLimit()) {
+                const { remaining, reset } = decision.reason;
+                console.error({
+                code: "RATE_LIMIT_EXCEEDED",
+                details: {
+                    remaining,
+                    resetInSeconds: reset,
+                },
+            });
+
+            throw new Error("Too many requests. Please try again later.");
+        }
+            throw new Error("Request blocked");
+        }
+
         const user = await prismadb.user.findUnique({
             where: { clerkUserId: userId },
         })
