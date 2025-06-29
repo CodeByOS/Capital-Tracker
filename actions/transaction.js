@@ -1,3 +1,5 @@
+"use server";
+
 import aj from "@/lib/arcjet";
 import { prismadb } from "@/lib/prisma";
 import { request } from "@arcjet/next";

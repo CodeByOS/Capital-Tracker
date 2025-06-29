@@ -1,6 +1,6 @@
 "use server";
 
-import { db } from "@/lib/prisma";
+import { prismadb } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 
@@ -19,13 +19,13 @@ export async function getAccountWithTransactions(accountId) {
     const { userId } = await auth();
     if (!userId) throw new Error("Unauthorized");
 
-    const user = await db.user.findUnique({
+    const user = await prismadb.user.findUnique({
         where: { clerkUserId: userId },
     });
 
     if (!user) throw new Error("User not found");
 
-    const account = await db.account.findUnique({
+    const account = await prismadb.account.findUnique({
         where: {
         id: accountId,
         userId: user.id,
@@ -53,14 +53,14 @@ export async function bulkDeleteTransactions(transactionIds) {
         const { userId } = await auth();
         if (!userId) throw new Error("Unauthorized");
 
-        const user = await db.user.findUnique({
+        const user = await prismadb.user.findUnique({
         where: { clerkUserId: userId },
         });
 
         if (!user) throw new Error("User not found");
 
         // Get transactions to calculate balance changes
-        const transactions = await db.transaction.findMany({
+        const transactions = await prismadb.transaction.findMany({
         where: {
             id: { in: transactionIds },
             userId: user.id,
@@ -78,7 +78,7 @@ export async function bulkDeleteTransactions(transactionIds) {
         }, {});
 
         // Delete transactions and update account balances in a transaction
-        await db.$transaction(async (tx) => {
+        await prismadb.$transaction(async (tx) => {
         // Delete transactions
         await tx.transaction.deleteMany({
             where: {
@@ -116,7 +116,7 @@ export async function updateDefaultAccount(accountId) {
         const { userId } = await auth();
         if (!userId) throw new Error("Unauthorized");
 
-        const user = await db.user.findUnique({
+        const user = await prismadb.user.findUnique({
         where: { clerkUserId: userId },
         });
 
@@ -125,7 +125,7 @@ export async function updateDefaultAccount(accountId) {
         }
 
         // First, unset any existing default account
-        await db.account.updateMany({
+        await prismadb.account.updateMany({
         where: {
             userId: user.id,
             isDefault: true,
@@ -134,7 +134,7 @@ export async function updateDefaultAccount(accountId) {
         });
 
         // Then set the new default account
-        const account = await db.account.update({
+        const account = await prismadb.account.update({
         where: {
             id: accountId,
             userId: user.id,
