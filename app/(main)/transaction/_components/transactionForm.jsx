@@ -27,7 +27,7 @@ import {
 import { Calendar } from "@/components/ui/calendar";
 import CreateAccountDrawer  from "@/components/account-drawer";
 import { cn } from "@/lib/utils";
-import { addTransaction, updateTransaction } from "@/actions/transaction";
+import { addTransaction } from "@/actions/transaction";
 import { transactionSchema } from "@/app/lib/schema";
 import { ReceiptScanner } from "./recipt-scanner";
 

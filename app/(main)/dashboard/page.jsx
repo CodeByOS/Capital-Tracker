@@ -3,7 +3,10 @@ import CreateAccountDrawer from '@/components/account-drawer'
 import { Card, CardContent } from '@/components/ui/card'
 import { Plus } from 'lucide-react'
 import React from 'react'
-import AccountCard from './_components/account-card';
+import { DashboardOverview } from './_components/transaction';
+import { getCurrentBudget } from '@/actions/budget';
+import { BudgetProgress } from './_components/budget-progress';
+import { AccountCard } from './_components/account-card';
 
 export default async function DashboardPage() {
   const [accounts, transactions] = await Promise.all([
@@ -30,6 +33,10 @@ export default async function DashboardPage() {
         )}
 
       {/* Overview */}
+      <DashboardOverview
+        accounts={accounts}
+        transactions={transactions || []}
+      />
 
       {/* Account Grid */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
