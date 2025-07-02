@@ -1,5 +1,6 @@
 import { getUserAccounts } from "@/actions/dashboard"
-import AddTransactionForm from "../_components/transactionForm"
+import { defaultCategories } from "@/data/categories";
+import { AddTransactionForm } from "../_components/transactionForm";
 
 
 const TransactionPage = async () => {

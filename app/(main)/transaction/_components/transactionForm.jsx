@@ -305,28 +305,32 @@ export function AddTransactionForm({
       )}
 
       {/* Actions */}
-      <div className="flex gap-4">
-        <Button
-          type="button"
-          variant="outline"
-          className="w-full"
-          onClick={() => router.back()}
-        >
-          Cancel
-        </Button>
-        <Button type="submit" className="w-full" disabled={transactionLoading}>
-          {transactionLoading ? (
-            <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              {editMode ? "Updating..." : "Creating..."}
-            </>
-          ) : editMode ? (
-            "Update Transaction"
-          ) : (
-            "Create Transaction"
-          )}
-        </Button>
-      </div>
+<div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+  <Button
+    type="button"
+    variant="outline"
+    className="sm:w-auto w-full"
+    onClick={() => router.back()}
+    disabled={transactionLoading}
+  >
+    Cancel
+  </Button>
+
+  <Button
+    type="submit"
+    className="sm:w-auto w-full"
+    disabled={transactionLoading}
+  >
+    {transactionLoading ? (
+      <>
+        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+        {editMode ? "Updating..." : "Creating..."}
+      </>
+    ) : (
+      editMode ? "Update Transaction" : "Create Transaction"
+    )}
+  </Button>
+</div>
     </form>
   );
 }

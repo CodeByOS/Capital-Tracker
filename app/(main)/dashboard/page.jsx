@@ -1,10 +1,11 @@
 import { getDashboardData, getUserAccounts } from '@/actions/dashboard';
-import CreateAccountDrawer from '@/components/account-drawer'
-import { Card, CardContent } from '@/components/ui/card'
-import { Plus } from 'lucide-react'
-import React from 'react'
-import { DashboardOverview } from './_components/transaction';
 import { getCurrentBudget } from '@/actions/budget';
+
+import CreateAccountDrawer from '@/components/account-drawer';
+import { Card, CardContent } from '@/components/ui/card';
+import { Plus } from 'lucide-react';
+
+import { DashboardOverview } from './_components/transaction';
 import { BudgetProgress } from './_components/budget-progress';
 import { AccountCard } from './_components/account-card';
 
@@ -25,12 +26,10 @@ export default async function DashboardPage() {
   return (
     <div className="px-5">
       {/* Budget progress */}
-      {defaultAccount && (
-        <BudgetProgress
-          initialBudget = { budgetData?.budget }
-          currentExpenses = { budgetData?.currentExpenses || 0 }
-        />
-        )}
+      <BudgetProgress
+        initialBudget={budgetData?.budget}
+        currentExpenses={budgetData?.currentExpenses || 0}
+      />
 
       {/* Overview */}
       <DashboardOverview
@@ -48,11 +47,12 @@ export default async function DashboardPage() {
             </CardContent>
           </Card>
         </CreateAccountDrawer>
+
         {accounts.length > 0 &&
-          accounts?.map((account) => (
+          accounts.map((account) => (
             <AccountCard key={account.id} account={account} />
           ))}
       </div>
     </div>
-  )
+  );
 }
