@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import {
   PieChart,
   Pie,
@@ -32,54 +32,66 @@ const COLORS = [
   "#9FA8DA",
 ];
 
+const formatCurrency = (value) =>
+  new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  }).format(value);
+
 export function DashboardOverview({ accounts, transactions }) {
   const [selectedAccountId, setSelectedAccountId] = useState(
     accounts.find((a) => a.isDefault)?.id || accounts[0]?.id
   );
 
-  // Filter transactions for selected account
-  const accountTransactions = transactions.filter(
-    (t) => t.accountId === selectedAccountId
+  const currentDate = new Date();
+
+  const accountTransactions = useMemo(
+    () => transactions.filter((t) => t.accountId === selectedAccountId),
+    [transactions, selectedAccountId]
   );
 
-  // Get recent transactions (last 5)
-  const recentTransactions = accountTransactions
-    .sort((a, b) => new Date(b.date) - new Date(a.date))
-    .slice(0, 5);
+  const recentTransactions = useMemo(
+    () =>
+      [...accountTransactions]
+        .sort((a, b) => new Date(b.date) - new Date(a.date))
+        .slice(0, 5),
+    [accountTransactions]
+  );
 
-  // Calculate expense breakdown for current month
-  const currentDate = new Date();
-  const currentMonthExpenses = accountTransactions.filter((t) => {
-    const transactionDate = new Date(t.date);
-    return (
-      t.type === "EXPENSE" &&
-      transactionDate.getMonth() === currentDate.getMonth() &&
-      transactionDate.getFullYear() === currentDate.getFullYear()
-    );
-  });
+  const currentMonthExpenses = useMemo(
+    () =>
+      accountTransactions.filter((t) => {
+        const transactionDate = new Date(t.date);
+        return (
+          t.type === "EXPENSE" &&
+          transactionDate.getMonth() === currentDate.getMonth() &&
+          transactionDate.getFullYear() === currentDate.getFullYear()
+        );
+      }),
+    [accountTransactions, currentDate]
+  );
 
-  // Group expenses by category
-  const expensesByCategory = currentMonthExpenses.reduce((acc, transaction) => {
-    const category = transaction.category;
-    if (!acc[category]) {
-      acc[category] = 0;
-    }
-    acc[category] += transaction.amount;
-    return acc;
-  }, {});
+  const expensesByCategory = useMemo(() => {
+    return currentMonthExpenses.reduce((acc, transaction) => {
+      const category = transaction.category;
+      acc[category] = (acc[category] || 0) + transaction.amount;
+      return acc;
+    }, {});
+  }, [currentMonthExpenses]);
 
-  // Format data for pie chart
-  const pieChartData = Object.entries(expensesByCategory).map(
-    ([category, amount]) => ({
-      name: category,
-      value: amount,
-    })
+  const pieChartData = useMemo(
+    () =>
+      Object.entries(expensesByCategory).map(([category, amount]) => ({
+        name: category,
+        value: amount,
+      })),
+    [expensesByCategory]
   );
 
   return (
     <div className="grid gap-4 md:grid-cols-2">
-      {/* Recent Transactions Card */}
-      <Card>
+      {/* Recent Transactions */}
+      <Card className="mt-4">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
           <CardTitle className="text-base font-normal">
             Recent Transactions
@@ -130,11 +142,17 @@ export function DashboardOverview({ accounts, transactions }) {
                       )}
                     >
                       {transaction.type === "EXPENSE" ? (
-                        <ArrowDownRight className="mr-1 h-4 w-4" />
+                        <ArrowDownRight
+                          className="mr-1 h-4 w-4"
+                          aria-label="Expense"
+                        />
                       ) : (
-                        <ArrowUpRight className="mr-1 h-4 w-4" />
+                        <ArrowUpRight
+                          className="mr-1 h-4 w-4"
+                          aria-label="Income"
+                        />
                       )}
-                      ${transaction.amount.toFixed(2)}
+                      {formatCurrency(transaction.amount)}
                     </div>
                   </div>
                 </div>
@@ -144,8 +162,8 @@ export function DashboardOverview({ accounts, transactions }) {
         </CardContent>
       </Card>
 
-      {/* Expense Breakdown Card */}
-      <Card>
+      {/* Monthly Expense Breakdown */}
+      <Card className="mt-4">
         <CardHeader>
           <CardTitle className="text-base font-normal">
             Monthly Expense Breakdown
@@ -167,7 +185,9 @@ export function DashboardOverview({ accounts, transactions }) {
                     outerRadius={80}
                     fill="#8884d8"
                     dataKey="value"
-                    label={({ name, value }) => `${name}: $${value.toFixed(2)}`}
+                    label={({ name, value }) =>
+                      `${name}: ${formatCurrency(value)}`
+                    }
                   >
                     {pieChartData.map((entry, index) => (
                       <Cell
@@ -177,7 +197,7 @@ export function DashboardOverview({ accounts, transactions }) {
                     ))}
                   </Pie>
                   <Tooltip
-                    formatter={(value) => `$${value.toFixed(2)}`}
+                    formatter={(value) => formatCurrency(value)}
                     contentStyle={{
                       backgroundColor: "hsl(var(--popover))",
                       border: "1px solid hsl(var(--border))",
