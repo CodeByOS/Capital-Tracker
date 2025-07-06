@@ -29,8 +29,8 @@ export function ReceiptScanner({ onScanComplete }) {
     //* Effect: when scannedData is available and loading is done, notify and return result
     useEffect(() => {
         if (scannedData && !scanReceiptLoading) {
-            onScanComplete(scannedData); // Callback to parent with result
-            toast.success("Receipt scanned successfully"); // Show success toast
+            onScanComplete(scannedData); //* Callback to parent with result
+            toast.success("Receipt scanned successfully"); //* Show success toast
         }
     }, [scanReceiptLoading, scannedData]);
 
