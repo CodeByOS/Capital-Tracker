@@ -140,7 +140,7 @@ export async function scanReceipt(file) {
                 "category": "string"
             }
 
-            If its not a recipt, return an empty object
+            If its not a recipt, return an empty object.
         `
 
         const result = await model.generateContent([
