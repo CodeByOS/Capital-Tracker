@@ -8,8 +8,9 @@ import useFetch from "@/hooks/use-fetch";
 import { scanReceipt } from "@/actions/transaction";
 
 export function ReceiptScanner({ onScanComplete }) {
-    const fileInputRef = useRef(null);
+    const fileInputRef = useRef(null); //* Reference to the file input element
 
+    //* Custom hook to handle receipt scan logic
     const {
         loading: scanReceiptLoading,
         fn: scanReceiptFn,
@@ -24,10 +25,11 @@ export function ReceiptScanner({ onScanComplete }) {
         await scanReceiptFn(file);
     };
 
+    //* Effect: when scannedData is available and loading is done, notify and return result
     useEffect(() => {
         if (scannedData && !scanReceiptLoading) {
-            onScanComplete(scannedData);
-            toast.success("Receipt scanned successfully");
+            onScanComplete(scannedData); // Callback to parent with result
+            toast.success("Receipt scanned successfully"); // Show success toast
         }
     }, [scanReceiptLoading, scannedData]);
 
@@ -47,7 +49,7 @@ export function ReceiptScanner({ onScanComplete }) {
             <Button
                 type="button"
                 variant="outline"
-                className="w-full h-10 bg-gradient-to-br from-orange-500 via-pink-500 to-purple-500 animate-gradient hover:opacity-90 transition-opacity text-white hover:text-white"
+                className="w-full h-10 bg-gradient-to-br from-blue-500 via-indigo-500 to-purple-600 animate-gradient hover:opacity-90 transition-opacity text-white hover:text-white"
                 onClick={() => fileInputRef.current?.click()}
                 disabled={scanReceiptLoading}
             >
