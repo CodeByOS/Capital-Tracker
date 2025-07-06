@@ -176,3 +176,33 @@ export async function scanReceipt(file) {
         throw new Error("Failed to scan receipt");
     }
 }
+
+export async function getTransaction(id) {
+    try {
+        const { userId } = await auth();
+        if(!userId) {
+            throw new Error("User not authenticated");
+        }
+
+        const user = await prismadb.user.findUnique({
+            where: { clerkUserId: userId },
+        });
+        if(!user) {
+            throw new Error("User not found");
+        }
+        const transaction = await prismadb.transaction.findUnique({
+            where: {
+                id,
+                userId: user.id,
+            },
+        });
+        if(!transaction) {
+            throw new Error("Transaction not found or does not belong to user");
+        }
+        return serializeAmount(transaction);
+        
+    } catch (err) {
+        console.error("Error fetching transaction:", err);
+        throw new Error(err.message || "Failed to fetch transaction");
+    }
+}
