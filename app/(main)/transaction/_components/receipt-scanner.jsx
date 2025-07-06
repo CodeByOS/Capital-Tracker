@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import useFetch from "@/hooks/use-fetch";
 import { scanReceipt } from "@/actions/transaction";
 
+
 export function ReceiptScanner({ onScanComplete }) {
     const fileInputRef = useRef(null); //* Reference to the file input element
 
