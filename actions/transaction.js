@@ -200,9 +200,79 @@ export async function getTransaction(id) {
             throw new Error("Transaction not found or does not belong to user");
         }
         return serializeAmount(transaction);
-        
+
     } catch (err) {
         console.error("Error fetching transaction:", err);
         throw new Error(err.message || "Failed to fetch transaction");
+    }
+}
+
+export async function updateTransaction(id, data) {
+    try {
+        const { userId } = await auth();
+        if(!userId) {
+            throw new Error("User not authenticated");
+        }
+
+        const user = await prismadb.user.findUnique({
+            where: { clerkUserId: userId },
+        });
+        if(!user) {
+            throw new Error("User not found");
+        }
+
+        //* Get original transaction to calculate balance change
+        const originalTransaction = await prismadb.transaction.findUnique({
+            where: {
+                id,
+                userId: user.id,
+            },
+            include: {
+                account: true, //! Include account to get current balance
+            },
+        });
+
+        if(!originalTransaction) {
+            throw new Error("Transaction not found or does not belong to user");
+        }
+
+        //* Calculate balance changes
+        const oldBalanceChange = originalTransaction.type === 'EXPENSE' ? -originalTransaction.amount.toNumber() : originalTransaction.amount.toNumber();
+
+        const newBalanceChange = data.type === 'EXPENSE' ? -data.amount : data.amount;
+
+        const balanceChange = newBalanceChange - oldBalanceChange;
+
+        //* Update transaction and account balance in a transaction
+        const transaction = await prismadb.$transaction(async (tx) => {
+            const updatedTransaction = await tx.transaction.update({
+                where: { id, userId: user.id },
+                data: {
+                    ...data,
+                    nextRecurringDate: data.isRecurring && data.recurringInterval
+                        ? calculateNextRecurringDate(data.date, data.recurringInterval)
+                        : null,
+                },
+            });
+
+            //* Update account balance
+            await tx.account.update({
+                where: { id: data.accountId },
+                data: { 
+                    balance: {
+                        increment: balanceChange,
+                    }
+                },
+            });
+
+            return updatedTransaction;
+        })
+
+        revalidatePath("/dashboard");
+        revalidatePath(`/account/${data.accountId}`);
+
+        return { success: true, data: serializeAmount(transaction) };
+    } catch (err) {
+        throw new Error(err.message || "Failed to update transaction");
     }
 }
