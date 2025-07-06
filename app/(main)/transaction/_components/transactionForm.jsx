@@ -53,26 +53,26 @@ export function AddTransactionForm({
     resolver: zodResolver(transactionSchema),
     defaultValues:
       editMode && initialData
-        ? {
-            type: initialData.type,
-            amount: initialData.amount.toString(),
-            description: initialData.description,
-            accountId: initialData.accountId,
-            category: initialData.category,
-            date: new Date(initialData.date),
-            isRecurring: initialData.isRecurring,
-            ...(initialData.recurringInterval && {
-              recurringInterval: initialData.recurringInterval,
-            }),
-          }
-        : {
-            type: "EXPENSE",
-            amount: "",
-            description: "",
-            accountId: accounts.find((ac) => ac.isDefault)?.id,
-            date: new Date(),
-            isRecurring: false,
-          },
+        ?  {
+              type: initialData.type,
+              amount: initialData.amount.toString(),
+              description: initialData.description,
+              accountId: initialData.accountId,
+              category: initialData.category,
+              date: new Date(initialData.date),
+              isRecurring: initialData.isRecurring,
+              ...(initialData.recurringInterval && {
+                recurringInterval: initialData.recurringInterval,
+              }),
+            }
+        :   {
+              type: "EXPENSE",
+              amount: "",
+              description: "",
+              accountId: accounts.find((ac) => ac.isDefault)?.id,
+              date: new Date(),
+              isRecurring: false,
+            },
   });
 
   const {
