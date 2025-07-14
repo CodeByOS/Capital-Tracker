@@ -1,7 +1,9 @@
 import HeroSection from "@/components/hero";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { featuresData, howItWorksData, statsData, testimonialsData } from "@/data/landing";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -98,14 +100,16 @@ export default function Home() {
             Ready to Take Charge of Your Finances?
           </h2>
           <p className="text-lg text-gray-700 max-w-2xl mx-auto mb-8">
-            Whether you're saving for the future or looking to better manage your money, our platform gives you the tools to succeed. Join a growing community focused on financial empowerment.
+            Whether you&#39;re saving for the future or looking to better manage your money, our platform gives you the tools to succeed. Join a growing community focused on financial empowerment.
           </p>
-          <a
-            href="/sign-up"
-            className="inline-block bg-blue-600 text-white text-lg font-medium px-8 py-4 rounded-xl hover:bg-blue-700 transition duration-300 animate-bounce shadow-lg"
-          >
-            Sign Up Now
-          </a>
+          <Link href="/dashboard">
+            <Button
+              size="lg"
+              className="bg-white text-blue-600 hover:bg-blue-50 animate-bounce"
+            >
+              Sign Up Now
+            </Button>
+          </Link>
         </div>
       </section>
     </div>
