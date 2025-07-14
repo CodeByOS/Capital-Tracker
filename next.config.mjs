@@ -5,9 +5,14 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "randomuser.me",
-        pathname: "/api/portraits/**", // this part is critical!
       },
     ],
+  },
+
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "5mb",
+    },
   },
 };
 
