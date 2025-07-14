@@ -60,36 +60,31 @@ export default function Home() {
         </div>
       </section>
       
-      <section className="py-24 bg-white">
+      <section id="testimonials" className="py-20">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-20 text-gray-800">
+          <h2 className="text-3xl font-bold text-center mb-16">
             What Our Users Say
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {testimonialsData.map((testimonial, index) => (
-              <Card
-                key={index}
-                className="rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 bg-white"
-              >
-                <CardContent className="p-6 space-y-6">
-                  <div className="flex items-center gap-4">
+              <Card key={index} className="p-6">
+                <CardContent className="pt-4">
+                  <div className="flex items-center mb-4">
                     <Image
                       src={testimonial.image}
                       alt={testimonial.name}
-                      width={48}
-                      height={48}
-                      className="rounded-full w-12 h-12 object-cover border border-gray-200"
+                      width={40}
+                      height={40}
+                      className="rounded-full"
                     />
-                    <div>
-                      <h3 className="font-semibold text-lg text-gray-900">
-                        {testimonial.name}
-                      </h3>
-                      <p className="text-sm text-gray-500">{testimonial.role}</p>
+                    <div className="ml-4">
+                      <div className="font-semibold">{testimonial.name}</div>
+                      <div className="text-sm text-gray-600">
+                        {testimonial.role}
+                      </div>
                     </div>
                   </div>
-                  <p className="text-gray-700 text-base leading-relaxed italic">
-                    “{testimonial.quote}”
-                  </p>
+                  <p className="text-gray-600">{testimonial.quote}</p>
                 </CardContent>
               </Card>
             ))}
