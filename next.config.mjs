@@ -5,11 +5,10 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "randomuser.me",
-        pathname: "/api/portraits/**", // <-- this is the missing piece
+        pathname: "/api/portraits/**", 
       },
     ],
   },
-
   experimental: {
     serverActions: {
       bodySizeLimit: "5mb",
