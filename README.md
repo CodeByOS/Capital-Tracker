@@ -76,4 +76,15 @@ RESEND_API_KEY=re_XXXXXXXXXXXXXXXXXXXXXXXXXXXX
 GEMINI_API_KEY=AIzaSyXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 ```
+### 4. Setup your database and Prisma client
 
+```bash
+npx prisma db push
+```
+### 5. Run the development server
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000] to view your app.
