@@ -1,28 +1,41 @@
-# 💰 Capital Tracker
+# 💰 Capital Tracker — Full Stack AI Finance Platform
 
-**Capital Tracker** is a full-stack, AI-powered finance platform that helps users manage their money with smart insights, budgeting tools, and automated transaction tracking. Built with modern tools like **Next.js**, **Shadcn UI**, **Tailwind CSS**, **Gemini AI**, and **Prisma**.
+A modern, full-stack AI-powered finance platform built with **Next.js**, **Supabase**, **Tailwind CSS**, **Prisma**, **Inngest**, **ArcJet**, and **Shadcn UI**.
 
----
-
-## 🚀 Tech Stack
-
-- **Frontend**: [Next.js](https://nextjs.org/), [Shadcn UI](https://ui.shadcn.com/), [Tailwind CSS](https://tailwindcss.com)
-- **AI**: [Gemini AI](https://deepmind.google/technologies/gemini) for smart receipt parsing and insights
-- **Backend**: [Next.js API Routes], [Prisma ORM](https://prisma.io)
-- **Database**: PostgreSQL (or compatible via Prisma)
-- **Deployment**: [Vercel](https://vercel.com)
+This project is designed as a comprehensive tutorial and real-world example for building production-grade SaaS apps using cutting-edge web technologies and AI.
 
 ---
 
-## 🧠 Key Features
+## 🔧 Tech Stack
 
-- 🔐 User Authentication (NextAuth or custom)
-- 📊 Dashboard with income/expense visualization
-- 🧾 AI Receipt Scanning via Gemini
-- 💡 Smart Budgeting & Spending Insights
-- 📧 Monthly Report Emails
-- ⏰ Scheduled Alerts via Cron or Inngest (optional)
-- 🛡️ API Rate Limiting & Bot Protection (Arcjet or Middleware)
+| Layer       | Tooling |
+|-------------|---------|
+| **Frontend** | Next.js 14 (App Router), Tailwind CSS, Shadcn UI |
+| **Backend**  | Supabase (Auth & DB), Prisma ORM, Inngest |
+| **AI**       | OpenAI or Gemini API for smart features |
+| **Security** | ArcJet (Rate Limiting & Bot Protection) |
+| **Deployment** | Vercel |
 
 ---
+
+## 📦 Features
+
+- 🔐 User Authentication via Supabase
+- 🧠 AI-Powered:
+  - Receipt Scanner (via AI APIs)
+  - Monthly Financial Insights
+- 📊 Visual Dashboards:
+  - Expenses by category
+  - Monthly summaries
+  - Pie & Bar Charts
+- ⏱ Serverless Workflows (via Inngest)
+  - Budget Alerts
+  - Recurring Transaction Cron Jobs
+  - Monthly Email Reports
+- 🛡 ArcJet integration for abuse protection
+- 🌐 API Routes & Custom Hooks for data fetching
+
+---
+
+## 📁 Folder Structure
 
