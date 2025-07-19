@@ -1,41 +1,79 @@
-# 💰 Capital Tracker — Full Stack AI Finance Platform
+# 💰 CapitalTracker
 
-A modern, full-stack AI-powered finance platform built with **Next.js**, **Supabase**, **Tailwind CSS**, **Prisma**, **Inngest**, **ArcJet**, and **Shadcn UI**.
+CapitalTracker is a full-stack AI-powered finance platform built with **Next.js 15**, **React 19**, **Prisma**, **Tailwind CSS**, **Shadcn UI**, **Clerk.js** authentication, **Google Generative AI** (Gemini), **Inngest** for serverless workflows, and **Arcjet** for rate limiting and bot protection.
 
-This project is designed as a comprehensive tutorial and real-world example for building production-grade SaaS apps using cutting-edge web technologies and AI.
-
----
-
-## 🔧 Tech Stack
-
-| Layer       | Tooling |
-|-------------|---------|
-| **Frontend** | Next.js 14 (App Router), Tailwind CSS, Shadcn UI |
-| **Backend**  | Supabase (Auth & DB), Prisma ORM, Inngest |
-| **AI**       | OpenAI or Gemini API for smart features |
-| **Security** | ArcJet (Rate Limiting & Bot Protection) |
-| **Deployment** | Vercel |
+Manage your personal finances effortlessly with smart AI-powered insights, receipt scanning, budgeting, and secure authentication.
 
 ---
 
-## 📦 Features
+## 🚀 Tech Stack
 
-- 🔐 User Authentication via Supabase
-- 🧠 AI-Powered:
-  - Receipt Scanner (via AI APIs)
-  - Monthly Financial Insights
-- 📊 Visual Dashboards:
-  - Expenses by category
-  - Monthly summaries
-  - Pie & Bar Charts
-- ⏱ Serverless Workflows (via Inngest)
-  - Budget Alerts
-  - Recurring Transaction Cron Jobs
-  - Monthly Email Reports
-- 🛡 ArcJet integration for abuse protection
-- 🌐 API Routes & Custom Hooks for data fetching
+- **Frontend:** Next.js 15 (App Router), React 19, Tailwind CSS, Shadcn UI, Radix UI components
+- **Authentication:** Clerk.js
+- **Backend:** Next.js API Routes, Prisma ORM
+- **Database:** PostgreSQL (via Prisma)
+- **AI Integration:** Google Generative AI (`@google/generative-ai`)
+- **Serverless Workflows:** Inngest
+- **Security:** Arcjet (rate limiting & bot protection)
+- **Email:** Resend + React Email components
+- **Utility Libraries:** react-hook-form, framer-motion, recharts
 
 ---
 
-## 📁 Folder Structure
+## ⚙️ Setup & Development
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/yourusername/capitaltracker.git
+cd capitaltracker
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Configure environment variables
+
+Create a *.env* file in the root with these variables:
+
+```bash
+# =======================
+# Clerk Authentication
+# =======================
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+CLERK_SECRET_KEY=sk_test_XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+# Clerk Custom Routes (Optional but recommended for custom sign-in pages)
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+
+# =======================
+# Supabase Database URLs
+# =======================
+
+# Connection pooling (used by the app during runtime)
+DATABASE_URL=postgresql://username:password@db-host:5432/capitaltracker?sslmode=require
+
+# Direct connection (used for Prisma CLI commands/migrations)
+DIRECT_URL=postgresql://username:password@db-host:5432/capitaltracker?sslmode=require
+
+# =======================
+# Arcjet (Rate Limiting / Bot Protection)
+# =======================
+ARCJET_KEY=arcjet_test_XXXXXXXXXXXXXXXXXXXX
+
+# =======================
+# Resend (Transactional Email API)
+# =======================
+RESEND_API_KEY=re_XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+# =======================
+# Gemini AI (Google Generative AI)
+# =======================
+GEMINI_API_KEY=AIzaSyXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+```
 
