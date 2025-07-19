@@ -87,4 +87,4 @@ npx prisma db push
 npm run dev
 ```
 
-Open [http://localhost:3000] to view your app.
+Open [http://localhost:3000](http://localhost:3000) to view your app.
