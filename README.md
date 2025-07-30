@@ -25,7 +25,7 @@ Manage your personal finances effortlessly with smart AI-powered insights, recei
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/capitaltracker.git
+git clone https://github.com/CodeByOS/capitaltracker.git
 cd capitaltracker
 ```
 
