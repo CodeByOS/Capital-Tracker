@@ -11,7 +11,6 @@ Manage your personal finances effortlessly with smart AI-powered insights, recei
 - **Frontend:** Next.js 15 (App Router), React 19, Tailwind CSS, Shadcn UI, Radix UI components
 - **Authentication:** Clerk.js
 - **Backend:** Next.js API Routes, Prisma ORM
-- **Database:** PostgreSQL (via Prisma)
 - **AI Integration:** Google Generative AI (`@google/generative-ai`)
 - **Serverless Workflows:** Inngest
 - **Security:** Arcjet (rate limiting & bot protection)
